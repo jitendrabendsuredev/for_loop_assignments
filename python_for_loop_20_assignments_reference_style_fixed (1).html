@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Python For Loop Business & Pattern Assignments</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(99,102,241,.10), transparent 30%),
+      radial-gradient(circle at top right, rgba(16,185,129,.08), transparent 28%),
+      #f7f8fb;
+    color:#111827;
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 50px}
+  .hero{
+    background:rgba(255,255,255,.95);
+    border:1px solid #e5e7eb;
+    border-radius:26px;
+    padding:24px 28px;
+    box-shadow:0 16px 45px rgba(17,24,39,.08);
+    margin-bottom:22px;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 16px;
+    border-radius:999px;
+    background:#eef2ff;
+    font-weight:800;
+    font-size:17px;
+    letter-spacing:.2px
+  }
+  .badge::before{content:"🐍";font-size:20px}
+  h1{font-size:46px;margin:12px 0 10px}
+  .sub{font-size:25px;line-height:1.65;color:#4b5563}
+  .bar{height:14px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-top:20px}
+  .bar>div{
+    height:100%;width:5%;
+    background:linear-gradient(90deg,#4f46e5,#10b981);
+    transition:.35s
+  }
+  .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .pill{background:#f3f4f6;padding:8px 11px;border-radius:12px;font-size:19px;font-weight:700}
+  .card{
+    background:rgba(255,255,255,.98);
+    border:1px solid #e5e7eb;
+    border-radius:28px;
+    padding:34px;
+    box-shadow:0 20px 55px rgba(17,24,39,.10);
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;width:8px;
+    background:linear-gradient(#4f46e5,#10b981);
+  }
+  .qtop{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}
+  .qno{font-size:20px;font-weight:800;color:#6b7280}
+  h2{font-size:40px;margin:9px 0 18px}
+  .story{
+    padding:18px;
+    background:#fafafa;
+    border-left:5px solid #111827;
+    border-radius:14px;
+    font-size:27px;
+    line-height:1.7;
+  }
+  .grid{display:grid;grid-template-columns:1fr;gap:15px;margin-top:18px}
+  .box{border:1px solid #e5e7eb;border-radius:16px;padding:20px;background:#fff;font-size:23px;line-height:1.65}
+  .box h3{margin:0 0 8px;font-size:21px}
+  code,pre{font-family:Consolas,monospace}
+  pre{
+    white-space:pre-wrap;
+    background:#111827;
+    color:#f9fafb;
+    padding:22px;
+    border-radius:16px;
+    overflow:auto;
+    line-height:1.65;
+    font-size:20px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);
+  }
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+  button{
+    border:0;border-radius:13px;padding:12px 17px;font-size:20px;font-weight:800;
+    cursor:pointer;
+  }
+  .primary{background:#111827;color:white}
+  .secondary{background:#e5e7eb;color:#111827}
+  .ghost{background:#eef2ff;color:#3730a3}
+  .hint,.solution{display:none;margin-top:18px}
+  .hint.show,.solution.show{display:block}
+  .hint{padding:18px;border-radius:14px;font-size:22px;line-height:1.6;background:#fffbeb;border:1px solid #fde68a}
+  .solution{padding:18px;border-radius:14px;font-size:21px;line-height:1.6;background:#ecfdf5;border:1px solid #a7f3d0}
+  .level{font-size:18px;font-weight:800;background:#f3f4f6;padding:7px 10px;border-radius:999px}
+  .note{
+    margin-top:20px;padding:15px 18px;border-radius:16px;background:#eff6ff;
+    color:#1e3a8a;line-height:1.65;font-size:21px
+  }
+  .category{
+    display:inline-block;
+    margin-bottom:8px;
+    padding:7px 11px;
+    border-radius:999px;
+    font-size:16px;
+    font-weight:800;
+  }
+  .business{background:#eef2ff;color:#3730a3}
+  .pattern{background:#f5f3ff;color:#7c3aed}
+  @media(max-width:750px){
+    h1{font-size:27px} h2{font-size:23px}
+    .grid{grid-template-columns:1fr}
+    .card,.hero{padding:20px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <span class="badge">Python • For Loop Assignments</span>
+    <div class="bar"><div id="progress"></div></div>
+    <div class="meta">
+      <span class="pill" id="counter">Assignment 1 / 20</span>
+      <span class="pill">Beginner → Intermediate</span>
+      <span class="pill">10 Business + 10 Pattern</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="qtop">
+      <div>
+        <div class="category business" id="category"></div>
+        <div class="qno" id="qno"></div>
+        <h2 id="title"></h2>
+      </div>
+      <span class="level" id="level"></span>
+    </div>
+
+    <div class="story" id="story"></div>
+
+    <div class="grid">
+      <div class="box">
+        <h3>🎯 Your Task</h3>
+        <div id="task"></div>
+      </div>
+
+      <div class="box">
+        <h3>🧪 Sample / Expected Output</h3>
+        <div id="sample"></div>
+      </div>
+    </div>
+
+    <div class="hint" id="hint"></div>
+    <div class="solution" id="solution"></div>
+
+    <div class="btns">
+      <button class="secondary" onclick="prevQ()">← Previous</button>
+      <button class="ghost" onclick="toggleHint()">💡 Show Hint</button>
+      <button class="ghost" onclick="toggleSolution()">✅ Show Solution</button>
+      <button class="primary" onclick="nextQ()">Next Assignment →</button>
+    </div>
+
+    <div class="note">
+      <b>Student Rule:</b> First try the logic yourself using <b>for loop / range()</b>. Open the hint only if required, and check the solution only after attempting.
+    </div>
+  </div>
+</div>
+
+<script>
+const data = [
+{
+title:"Daily Sales Total", level:"Easy", category:"Business",
+story:"A retail shop records daily sales amounts. At the end of the day, the owner wants to know the total sales without adding every value manually.",
+task:"Given a list of sales amounts, use a <b>for loop</b> to calculate and print the total sales.",
+sample:"<b>Data:</b> sales = [1200, 1500, 1100, 1800, 1400]<br><b>Output:</b> Total Sales = 7000",
+hint:"Create <code>total = 0</code>. Visit every sale and add it to total.",
+solution:`<pre>sales = [1200, 1500, 1100, 1800, 1400]
+
+total = 0
+for sale in sales:
+    total = total + sale
+
+print("Total Sales =", total)</pre>`
+},
+{
+title:"Employee Salary Display", level:"Easy", category:"Business",
+story:"HR has employee names and monthly salaries stored in two lists. The system should display the correct salary beside each employee name.",
+task:"Use a <b>for loop</b> to print each employee name with the corresponding salary.",
+sample:"<b>Employees:</b> Asha, Ravi, Neha<br><b>Salaries:</b> 25000, 30000, 28000<br><b>Output:</b><br>Asha - 25000<br>Ravi - 30000<br>Neha - 28000",
+hint:"Use <code>range(len(employees))</code> so the same index can access both lists.",
+solution:`<pre>employees = ["Asha", "Ravi", "Neha"]
+salaries = [25000, 30000, 28000]
+
+for i in range(len(employees)):
+    print(employees[i], "-", salaries[i])</pre>`
+},
+{
+title:"Product Price Summary", level:"Easy", category:"Business",
+story:"An e-commerce company stores product names and prices separately. The website must display each product with its price.",
+task:"Print every product with its price using a for loop.",
+sample:"<b>Products:</b> Mouse, Keyboard, Monitor<br><b>Prices:</b> 500, 1200, 8500",
+hint:"Use index-based looping.",
+solution:`<pre>products = ["Mouse", "Keyboard", "Monitor"]
+prices = [500, 1200, 8500]
+
+for i in range(len(products)):
+    print(products[i], ":", prices[i])</pre>`
+},
+{
+title:"Monthly Expense Total", level:"Easy", category:"Business",
+story:"A small company records different operating expenses during the month. Finance wants the total expenditure.",
+task:"Use a for loop to calculate the total of all expenses.",
+sample:"<b>Data:</b> [4500, 3200, 2800, 5100, 3900, 2600]<br><b>Output:</b> Total Expense = 22100",
+hint:"Use an accumulator variable such as <code>total_expense</code>.",
+solution:`<pre>expenses = [4500, 3200, 2800, 5100, 3900, 2600]
+
+total_expense = 0
+for expense in expenses:
+    total_expense += expense
+
+print("Total Expense =", total_expense)</pre>`
+},
+{
+title:"Customer Order IDs", level:"Easy", category:"Business",
+story:"An online store wants to generate order IDs automatically instead of typing every ID manually.",
+task:"Use <b>range()</b> with a for loop to print order IDs from <b>ORD-101</b> to <b>ORD-110</b>.",
+sample:"<b>Output:</b><br>ORD-101<br>ORD-102<br>...<br>ORD-110",
+hint:"Use <code>range(101, 111)</code>.",
+solution:`<pre>for number in range(101, 111):
+    print("ORD-" + str(number))</pre>`
+},
+{
+title:"Invoice Line Total", level:"Medium", category:"Business",
+story:"A billing system stores item quantities and prices. Each invoice line total must be calculated and then added to the final invoice amount.",
+task:"Calculate each item total using <b>quantity × price</b> and print the final invoice total.",
+sample:"<b>Qty:</b> [2, 3, 1]<br><b>Price:</b> [500, 200, 1500]<br><b>Final:</b> Invoice Total = 3100",
+hint:"Use <code>range(len(qty))</code>, calculate each line, then add it to a total.",
+solution:`<pre>qty = [2, 3, 1]
+price = [500, 200, 1500]
+
+invoice_total = 0
+
+for i in range(len(qty)):
+    item_total = qty[i] * price[i]
+    print("Item", i + 1, "Total =", item_total)
+    invoice_total += item_total
+
+print("Invoice Total =", invoice_total)</pre>`
+},
+{
+title:"Student Marks Average", level:"Medium", category:"Business",
+story:"A training institute wants to calculate the total and average marks of a student across multiple tests.",
+task:"Use a for loop to calculate total marks and average.",
+sample:"<b>Marks:</b> [78, 82, 90, 75, 85]<br><b>Output:</b> Total = 410, Average = 82.0",
+hint:"First calculate total. Then divide by <code>len(marks)</code>.",
+solution:`<pre>marks = [78, 82, 90, 75, 85]
+
+total = 0
+for mark in marks:
+    total += mark
+
+average = total / len(marks)
+
+print("Total Marks =", total)
+print("Average =", average)</pre>`
+},
+{
+title:"Warehouse Stock Count", level:"Medium", category:"Business",
+story:"A warehouse stores quantities for multiple products. The manager wants the total number of units currently available.",
+task:"Find the total warehouse stock using a for loop.",
+sample:"<b>Stock:</b> [45, 32, 18, 60, 25]<br><b>Output:</b> Total Units = 180",
+hint:"Add every quantity to <code>total_stock</code>.",
+solution:`<pre>stock = [45, 32, 18, 60, 25]
+
+total_stock = 0
+for quantity in stock:
+    total_stock += quantity
+
+print("Total Units =", total_stock)</pre>`
+},
+{
+title:"Yearly Revenue Report", level:"Medium", category:"Business",
+story:"A business wants to print month-wise revenue and calculate the total revenue for the available months.",
+task:"Print month number with revenue and finally print total revenue.",
+sample:"<b>Revenue:</b> [50000, 62000, 58000, 71000]<br><b>Total:</b> 241000",
+hint:"Use <code>range(len(revenue))</code> so you can print month number.",
+solution:`<pre>revenue = [50000, 62000, 58000, 71000]
+
+total = 0
+
+for i in range(len(revenue)):
+    print("Month", i + 1, "=", revenue[i])
+    total += revenue[i]
+
+print("Total Revenue =", total)</pre>`
+},
+{
+title:"Department Training Schedule", level:"Medium", category:"Business",
+story:"A company has multiple departments and every department must attend every training session.",
+task:"Use <b>nested for loops</b> to print every department-session combination.",
+sample:"<b>Departments:</b> IT, HR, Sales<br><b>Sessions:</b> Python, Communication",
+hint:"Outer loop = departments. Inner loop = sessions.",
+solution:`<pre>departments = ["IT", "HR", "Sales"]
+sessions = ["Python", "Communication"]
+
+for department in departments:
+    for session in sessions:
+        print(department, "-", session)</pre>`
+},
+
+{
+title:"5-Star Line", level:"Easy", category:"Pattern",
+story:"Instead of typing the same symbol repeatedly, use a loop to generate the pattern.",
+task:"Print exactly <b>5 stars</b> on the same line.",
+sample:"<b>Output:</b><br>* * * * *",
+hint:"Use <code>print('*', end=' ')</code> inside <code>range(5)</code>.",
+solution:`<pre>for i in range(5):
+    print("*", end=" ")</pre>`
+},
+{
+title:"Square Star Pattern", level:"Easy", category:"Pattern",
+story:"A square pattern has the same number of rows and columns.",
+task:"Print a <b>4 × 4</b> star square using nested for loops.",
+sample:`<pre>* * * *
+* * * *
+* * * *
+* * * *</pre>`,
+hint:"Outer loop controls rows. Inner loop prints 4 stars.",
+solution:`<pre>for row in range(4):
+    for col in range(4):
+        print("*", end=" ")
+    print()</pre>`
+},
+{
+title:"Growing Star Triangle", level:"Easy", category:"Pattern",
+story:"Each new row should contain one more star than the previous row.",
+task:"Print a 5-row growing star triangle.",
+sample:`<pre>*
+* *
+* * *
+* * * *
+* * * * *</pre>`,
+hint:"Use <code>range(1, 6)</code> and <code>range(row)</code>.",
+solution:`<pre>for row in range(1, 6):
+    for col in range(row):
+        print("*", end=" ")
+    print()</pre>`
+},
+{
+title:"Inverted Star Triangle", level:"Easy", category:"Pattern",
+story:"This time the pattern should shrink by one star after every row.",
+task:"Print 5 stars, then 4, 3, 2, and 1.",
+sample:`<pre>* * * * *
+* * * *
+* * *
+* *
+*</pre>`,
+hint:"Use <code>range(5, 0, -1)</code>.",
+solution:`<pre>for row in range(5, 0, -1):
+    for col in range(row):
+        print("*", end=" ")
+    print()</pre>`
+},
+{
+title:"Repeated Number Triangle", level:"Easy", category:"Pattern",
+story:"The row number itself should be repeated according to the current row.",
+task:"Create the pattern 1, then 2 2, then 3 3 3, up to row 5.",
+sample:`<pre>1
+2 2
+3 3 3
+4 4 4 4
+5 5 5 5 5</pre>`,
+hint:"Print <code>row</code> inside the inner loop.",
+solution:`<pre>for row in range(1, 6):
+    for col in range(row):
+        print(row, end=" ")
+    print()</pre>`
+},
+{
+title:"Increasing Number Triangle", level:"Medium", category:"Pattern",
+story:"Each row starts from 1 and prints numbers up to the current row number.",
+task:"Print 1, then 1 2, then 1 2 3, up to row 5.",
+sample:`<pre>1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5</pre>`,
+hint:"Inner loop: <code>range(1, row + 1)</code>.",
+solution:`<pre>for row in range(1, 6):
+    for num in range(1, row + 1):
+        print(num, end=" ")
+    print()</pre>`
+},
+{
+title:"Multiplication Table Grid", level:"Medium", category:"Pattern",
+story:"A training system needs multiple multiplication tables instead of just one.",
+task:"Print multiplication tables from <b>2 to 5</b>. Each table should run from ×1 to ×5.",
+sample:"<b>Example:</b><br>2 x 1 = 2<br>2 x 2 = 4<br>...<br>5 x 5 = 25",
+hint:"Outer loop chooses the table. Inner loop chooses the multiplier.",
+solution:`<pre>for table in range(2, 6):
+    for n in range(1, 6):
+        print(table, "x", n, "=", table * n)
+    print()</pre>`
+},
+{
+title:"Coordinate Grid", level:"Medium", category:"Pattern",
+story:"Rows and columns can also be represented as coordinate pairs.",
+task:"Print all coordinate pairs for rows 1–3 and columns 1–3.",
+sample:`<pre>(1,1) (1,2) (1,3)
+(2,1) (2,2) (2,3)
+(3,1) (3,2) (3,3)</pre>`,
+hint:"Use two nested loops from 1 to 3.",
+solution:`<pre>for row in range(1, 4):
+    for col in range(1, 4):
+        print("(" + str(row) + "," + str(col) + ")", end=" ")
+    print()</pre>`
+},
+{
+title:"Continuous Number Triangle", level:"Medium", category:"Pattern",
+story:"Instead of restarting numbers in each row, keep one counter increasing continuously.",
+task:"Print a continuous number triangle for 4 rows.",
+sample:`<pre>1
+2 3
+4 5 6
+7 8 9 10</pre>`,
+hint:"Create <code>num = 1</code> before the loops and increase it inside the inner loop.",
+solution:`<pre>num = 1
+
+for row in range(1, 5):
+    for col in range(row):
+        print(num, end=" ")
+        num += 1
+    print()</pre>`
+},
+{
+title:"Alphabet Pattern", level:"Medium", category:"Pattern",
+story:"You can also build patterns using letters instead of stars or numbers.",
+task:"Use nested loops and <code>chr()</code> to print A, then A B, then A B C, then A B C D.",
+sample:`<pre>A
+A B
+A B C
+A B C D</pre>`,
+hint:"ASCII value of A is 65. Use <code>chr(64 + col)</code>.",
+solution:`<pre>for row in range(1, 5):
+    for col in range(1, row + 1):
+        print(chr(64 + col), end=" ")
+    print()</pre>`
+}
+];
+
+let i = 0;
+
+function render(){
+  const q = data[i];
+
+  document.getElementById("qno").innerText = "ASSIGNMENT " + (i+1);
+  document.getElementById("title").innerText = q.title;
+  document.getElementById("level").innerText = q.level;
+  document.getElementById("story").innerHTML = q.story;
+  document.getElementById("task").innerHTML = q.task;
+  document.getElementById("sample").innerHTML = q.sample;
+  document.getElementById("hint").innerHTML = "<b>💡 Hint:</b> " + q.hint;
+  document.getElementById("solution").innerHTML = "<b>✅ Suggested Solution</b>" + q.solution;
+  document.getElementById("counter").innerText = `Assignment ${i+1} / ${data.length}`;
+  document.getElementById("progress").style.width = ((i+1)/data.length*100) + "%";
+
+  const cat = document.getElementById("category");
+  cat.innerText = q.category + " Oriented";
+  cat.className = "category " + (q.category === "Business" ? "business" : "pattern");
+
+  document.getElementById("hint").classList.remove("show");
+  document.getElementById("solution").classList.remove("show");
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function nextQ(){ if(i < data.length-1){i++; render();} }
+function prevQ(){ if(i > 0){i--; render();} }
+function toggleHint(){ document.getElementById("hint").classList.toggle("show"); }
+function toggleSolution(){ document.getElementById("solution").classList.toggle("show"); }
+
+document.addEventListener("keydown", e=>{
+  if(e.key === "ArrowRight") nextQ();
+  if(e.key === "ArrowLeft") prevQ();
+});
+
+render();
+</script>
+</body>
+</html>
